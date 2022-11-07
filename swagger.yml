@@ -1,0 +1,211 @@
+swagger: '2.0'
+info:
+  description: |
+    RESTful HTTP service which (i) is leveraged by administrators to keep
+    track of users’ accreditation status, and (ii) serves a client facing web application, serving the
+    current status of a user’s accreditation status.
+  version: 1.0.0
+  title: User-Accreditation
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# basePath: /v2
+tags:
+  - name: User-Accreditation administration
+    description: User accreditation endpoints from administration perspective
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: User-Accreditation client
+    description: User accreditation endpoints from cllients perspective
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+# - http
+paths:
+  /user/accreditation:
+    post:
+      tags:
+        - User-Accreditation administration
+      summary: Accreditation status creation
+      operationId: createAccreditationStatus
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description : accreditation status that we want to create
+          required: true
+          schema:
+            $ref: '#/definitions/AccreditationStatusCreation'
+      responses:
+        405:
+          description: Invalid input
+        404:
+          description: Not Found
+        500:
+          description: Internal system error
+        200:
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/AccreditationStatusResponse'
+
+  /user/accreditation/{accreditationId}:
+    put:
+      tags:
+        - User-Accreditation administration
+      summary: Accreditation status finalization
+      operationId: finalizeAccreditationStatus
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: accreditationId
+          in: path
+          description: Id of the accreditation
+          required: true
+          type: string
+        - in: body
+          name: body
+          description : accreditation status that we want to finalize (outcome)
+          required: true
+          schema:
+            $ref: '#/definitions/AccreditationStatusFinalization'
+      responses:
+        405:
+          description: Invalid input
+        404:
+          description: Not Found
+        500:
+          description: Internal system error
+        200:
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/AccreditationStatusResponse'
+
+  /user/{userId}/accreditation:
+    get:
+      tags:
+        - User-Accreditation client
+      summary: Accreditation status retrival
+      operationId: getAccreditationStatus
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: userId
+          in: path
+          description: Id of the user
+          required: true
+          type: string
+      responses:
+        405:
+          description: Invalid input
+        404:
+          description: Not Found
+        500:
+          description: Internal system error
+        200:
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/AccreditationStatusForUser'
+
+definitions:
+  AccreditationStatusCreation:
+    type: object
+    properties:
+      user_id:
+        type: string
+        description: Id of the user
+        example: g8NlYJnk7zK9BlB1J2Ebjs0AkhCTpE1V
+      accreditation_type:
+        type: string
+        enum:
+          - BY_INCOME
+          - BY_NET_WORTH
+        description: Possibel type of accreditation
+        example: BY_INCOME
+      document:
+        $ref: '#/definitions/Document'
+
+  Document:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the submited document
+        example: 2018.pdf
+      mime_type:
+        type: string
+        description: Type of mime
+        example: application/pdf
+      content:
+        type: string
+        description: Document content
+        example: ICAiQC8qIjogWyJzcmMvKiJdCiAgICB9CiAgfQp9Cg==
+
+  AccreditationStatusResponse:
+    type: object
+    properties:
+      accreditation_id:
+        type: string
+        description: Unique Id for the accreditation
+        example: 87bb6030-458e-11ed-b023-039b275a916a
+
+  AccreditationStatusFinalization:
+    type: object
+    properties:
+      outcome:
+        type: string
+        enum:
+          - CONFIRMED
+          - EXPIRED
+          - FAILED
+        description: Status of the reviewed or expired accreditation
+        example: CONFIRMED
+
+  AccreditationStatusForUser:
+    type: object
+    properties:
+      user_id:
+        type: string
+        description: Id of the user
+        example: g8NlYJnk7zK9BlB1J2Ebjs0AkhCTpE1V
+      accreditation_statuses:
+        $ref: '#/definitions/AccreditationStatus'
+
+  AccreditationStatus:
+    type: object
+    additionalProperties:
+      $ref: '#/definitions/StatusDetails'
+
+  StatusDetails:
+    type: object
+    properties:
+      accreditation_type:
+        type: string
+        description: Type of this accreditation
+        example: BY_INCOME
+      status:
+        type: string
+        description: Status of the accreditation
+        example: FAILED
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+# basePath: /medicka/user-accreditation/1.0.0
+schemes:
+  - https
+  - http
+# Added by API Auto Mocking Plugin
+basePath: /medicka/User-Accreditation/1.0.0
