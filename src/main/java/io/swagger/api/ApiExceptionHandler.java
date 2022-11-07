@@ -14,29 +14,29 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = UserAccreditationApi.class)
 public class ApiExceptionHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApiExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 
     @ResponseBody
     @ExceptionHandler(value = {NotFoundException.class})
-    public ResponseEntity<?> handleNotFoundException(NotFoundException ex){
-        LOGGER.error("Not Found Exception");
-        LOGGER.error(ex.getMessage());
+    public ResponseEntity<?> handleNotFoundException(NotFoundException ex) {
+        log.error("Not Found Exception");
+        log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ResponseBody
     @ExceptionHandler(value = {ValidationException.class})
-    public ResponseEntity<?> handleValidationException(ValidationException ex){
-        LOGGER.error("Validation failed");
-        LOGGER.error(ex.getMessage());
+    public ResponseEntity<?> handleValidationException(ValidationException ex) {
+        log.error("Validation failed");
+        log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @ResponseBody
     @ExceptionHandler(value = {InternalSystemErrorException.class})
-    public ResponseEntity<?> handleInternalSystemErrorException(InternalSystemErrorException ex){
-        LOGGER.error("Internal system error");
-        LOGGER.error(ex.getMessage());
+    public ResponseEntity<?> handleInternalSystemErrorException(InternalSystemErrorException ex) {
+        log.error("Internal system error");
+        log.error(ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 }

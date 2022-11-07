@@ -1,10 +1,10 @@
 package io.swagger.api;
 
+import io.swagger.annotations.ApiParam;
 import io.swagger.model.AccreditationStatusCreation;
 import io.swagger.model.AccreditationStatusFinalization;
 import io.swagger.model.AccreditationStatusForUser;
 import io.swagger.model.AccreditationStatusResponse;
-import io.swagger.annotations.*;
 import io.swagger.service.UserAccreditationService;
 import io.swagger.service.ValidationService;
 import org.slf4j.Logger;
@@ -32,21 +32,25 @@ public class UserAccreditationApiController implements UserAccreditationApi {
     private ValidationService validationService;
 
 
-    public ResponseEntity<AccreditationStatusResponse> createAccreditationStatus(@ApiParam(value = "accreditation status that we want to create" ,required=true )  @Valid @RequestBody AccreditationStatusCreation body) {
+    public ResponseEntity<AccreditationStatusResponse> createAccreditationStatus(@ApiParam(value = "accreditation status that we want to create", required = true) @Valid @RequestBody AccreditationStatusCreation body) {
+
 
         validationService.validateAccreditationStatusCreationDetails(body);
+        log.info("Validation sucessfull!");
         return new ResponseEntity<AccreditationStatusResponse>(userAccreditationService.statusCreation(userAccreditationService.bodyToEntity(body)), HttpStatus.OK);
     }
 
-    public ResponseEntity<AccreditationStatusResponse> finalizeAccreditationStatus(@ApiParam(value = "Id of the accreditation",required=true) @PathVariable("accreditationId") Integer accreditationId,@ApiParam(value = "accreditation status that we want to finalize (outcome)" ,required=true )  @Valid @RequestBody AccreditationStatusFinalization body) {
+    public ResponseEntity<AccreditationStatusResponse> finalizeAccreditationStatus(@ApiParam(value = "Id of the accreditation", required = true) @PathVariable("accreditationId") Integer accreditationId, @ApiParam(value = "accreditation status that we want to finalize (outcome)", required = true) @Valid @RequestBody AccreditationStatusFinalization body) {
 
         validationService.validateAccreditationStatusFinalization(accreditationId, body);
+        log.info("Validation sucessfull!");
         return new ResponseEntity<AccreditationStatusResponse>(userAccreditationService.updateStatus(accreditationId, body), HttpStatus.OK);
     }
 
-    public ResponseEntity<AccreditationStatusForUser> getAccreditationStatus(@ApiParam(value = "Id of the user",required=true) @PathVariable("userId") String userId) {
+    public ResponseEntity<AccreditationStatusForUser> getAccreditationStatus(@ApiParam(value = "Id of the user", required = true) @PathVariable("userId") String userId) {
 
         validationService.validateAccreditationStatusForUser(userId);
+        log.info("Validation sucessfull!");
         return new ResponseEntity<AccreditationStatusForUser>(userAccreditationService.getAllAccreditation(userId), HttpStatus.OK);
     }
 

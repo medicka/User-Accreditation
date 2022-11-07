@@ -5,19 +5,17 @@
  */
 package io.swagger.api;
 
+import io.swagger.annotations.*;
 import io.swagger.model.AccreditationStatusCreation;
 import io.swagger.model.AccreditationStatusFinalization;
 import io.swagger.model.AccreditationStatusForUser;
 import io.swagger.model.AccreditationStatusResponse;
-import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
-import java.util.List;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2022-11-06T09:31:38.352Z")
 
 @Validated
@@ -26,41 +24,41 @@ import java.util.List;
 @RestController
 public interface UserAccreditationApi {
 
-    @ApiOperation(value = "Accreditation status creation", nickname = "createAccreditationStatus", notes = "", response = AccreditationStatusResponse.class, tags={ "User-Accreditation administration", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successful Response", response = AccreditationStatusResponse.class),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 405, message = "Invalid input"),
-        @ApiResponse(code = 500, message = "Internal system error") })
+    @ApiOperation(value = "Accreditation status creation", nickname = "createAccreditationStatus", notes = "", response = AccreditationStatusResponse.class, tags = {"User-Accreditation administration",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Response", response = AccreditationStatusResponse.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 405, message = "Invalid input"),
+            @ApiResponse(code = 500, message = "Internal system error")})
     @RequestMapping(value = "/user/accreditation",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
-    ResponseEntity<?> createAccreditationStatus(@ApiParam(value = "accreditation status that we want to create" ,required=true )  @Valid @RequestBody AccreditationStatusCreation body);
+            produces = {"application/json"},
+            consumes = {"application/json"},
+            method = RequestMethod.POST)
+    ResponseEntity<?> createAccreditationStatus(@ApiParam(value = "accreditation status that we want to create", required = true) @Valid @RequestBody AccreditationStatusCreation body);
 
 
-    @ApiOperation(value = "Accreditation status finalization", nickname = "finalizeAccreditationStatus", notes = "", response = AccreditationStatusResponse.class, tags={ "User-Accreditation administration", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successful Response", response = AccreditationStatusResponse.class),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 405, message = "Invalid input"),
-        @ApiResponse(code = 500, message = "Internal system error") })
+    @ApiOperation(value = "Accreditation status finalization", nickname = "finalizeAccreditationStatus", notes = "", response = AccreditationStatusResponse.class, tags = {"User-Accreditation administration",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Response", response = AccreditationStatusResponse.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 405, message = "Invalid input"),
+            @ApiResponse(code = 500, message = "Internal system error")})
     @RequestMapping(value = "/user/accreditation/{accreditationId}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
-    ResponseEntity<AccreditationStatusResponse> finalizeAccreditationStatus(@ApiParam(value = "Id of the accreditation",required=true) @PathVariable("accreditationId") Integer accreditationId,@ApiParam(value = "accreditation status that we want to finalize (outcome)" ,required=true )  @Valid @RequestBody AccreditationStatusFinalization body);
+            produces = {"application/json"},
+            consumes = {"application/json"},
+            method = RequestMethod.PUT)
+    ResponseEntity<AccreditationStatusResponse> finalizeAccreditationStatus(@ApiParam(value = "Id of the accreditation", required = true) @PathVariable("accreditationId") Integer accreditationId, @ApiParam(value = "accreditation status that we want to finalize (outcome)", required = true) @Valid @RequestBody AccreditationStatusFinalization body);
 
 
-    @ApiOperation(value = "Accreditation status retrival", nickname = "getAccreditationStatus", notes = "", response = AccreditationStatusForUser.class, tags={ "User-Accreditation client", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successful Response", response = AccreditationStatusForUser.class),
-        @ApiResponse(code = 404, message = "Not Found"),
-        @ApiResponse(code = 405, message = "Invalid input"),
-        @ApiResponse(code = 500, message = "Internal system error") })
+    @ApiOperation(value = "Accreditation status retrival", nickname = "getAccreditationStatus", notes = "", response = AccreditationStatusForUser.class, tags = {"User-Accreditation client",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Response", response = AccreditationStatusForUser.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 405, message = "Invalid input"),
+            @ApiResponse(code = 500, message = "Internal system error")})
     @RequestMapping(value = "/user/{userId}/accreditation",
-        produces = { "application/json" },
-        method = RequestMethod.GET)
-    ResponseEntity<AccreditationStatusForUser> getAccreditationStatus(@ApiParam(value = "Id of the user",required=true) @PathVariable("userId") String userId);
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    ResponseEntity<AccreditationStatusForUser> getAccreditationStatus(@ApiParam(value = "Id of the user", required = true) @PathVariable("userId") String userId);
 
 }

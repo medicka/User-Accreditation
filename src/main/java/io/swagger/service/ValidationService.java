@@ -5,6 +5,7 @@ import io.swagger.model.AccreditationStatusFinalization;
 
 public interface ValidationService {
 
+
     void validateAccreditationStatusCreationDetails(AccreditationStatusCreation accreditationStatusCreation);
 
     void validateAccreditationStatusFinalization(Integer accreditationId, AccreditationStatusFinalization accreditationStatusFinalization);
